@@ -1,27 +1,22 @@
 import pandas as pd
 
-data = [
-['Alice', 25],
-['Bob', 30],
-['Charlie', 35]
-]
-df = pd.DataFrame(data, columns=['Nombre', 'Edad'])
+edades = [19,29,19,22,23,19,30,19,19,19,20,20,20,18,22,19,34,34,21,21,22,28,29,19
+        ,20,19,25,28,21,22]
 
+def analisis_estadistico(lista): 
+    data = pd.Series(lista)
+    df = pd.DataFrame({"edades": dict(data.value_counts()).keys(), "fi": dict(data.value_counts()).values()})
 
-data_frame = pd.read_csv("Libro1.csv", delimiter= ";")
+    df["Fi"] = df['fi'].cumsum()
 
+    df["ri"] = (df["fi"] / df["fi"].sum()).round(4)
 
+    df["Ri"] = df['ri'].cumsum()
 
+    df["pi%"] = df['ri'] * 100
 
-data_frame["Fi"] = data_frame['fi'].cumsum()
+    df["Pi%"] = df['Ri'] * 100
 
-data_frame["ri"] = (data_frame["fi"] / data_frame["fi"].sum()).round(4)
+    print(df)
 
-data_frame["Ri"] = data_frame['ri'].cumsum()
-
-data_frame["pi%"] = data_frame['ri'] * 100
-
-data_frame["Pi%"] = data_frame['Ri'] * 100
-
-data_frame.to_clipboard(decimal=",")
-print(data_frame)
+analisis_estadistico(edades)
